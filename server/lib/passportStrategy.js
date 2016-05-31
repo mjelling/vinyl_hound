@@ -15,7 +15,7 @@ JwtOpts.jwtFromRequest = function(req) {
 };
 
 // you have to make create your own .env file. refer to the template guides for reference
-JwtOpts.secretOrKey = process.env.JWT_SECRET;
+JwtOpts.secretOrKey = 'vinyliswhati3willexplore';
 
 // TODO: Not needed?
 // JwtOpts.issuer = "accounts.examplesoft.com";

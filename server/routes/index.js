@@ -1,3 +1,6 @@
+// ----------------------
+// ****** Modules! ******
+// ----------------------
 var express = require('express'),
     router = express.Router(),
     /*
@@ -6,12 +9,20 @@ var express = require('express'),
     */
     path = require('path');
 
+
+
 router.get('/', function(req, res, next) {
-  res.sendFile( path.resolve('client/public/views/index.html') );
+  res.render("index");
 });
 
-router.get('/signup', function(req, res, next) {
-  res.sendFile( path.resolve('client/public/views/signup.html') );
+router.get('/main', function(req, res, next) {
+  res.render("main");
 });
 
+
+
+
+// ----------------------
+// ****** Exports! ******
+// ----------------------
 module.exports = router;

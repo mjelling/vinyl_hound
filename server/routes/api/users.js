@@ -8,11 +8,9 @@ var express             = require('express'),
 usersRouter.post('/', function(req, res, next) {
 
   User.create(req.body.user, function( err, dbUser ) {
-
     if (err) { res.status(500).end() }
-    // res.json( dbUser );
-    res.redirect("/");
-
+    res.json( dbUser );
+    // res.redirect('/login');
   });
 });
 
@@ -20,6 +18,13 @@ usersRouter.use(passport.authenticate('jwt', { session: false}));
 
 // GET all users
 usersRouter.get('/', function(req, res, next) {
+
+  User.find(function( err, dbUsers ){
+    res.json( dbUsers );
+  });
+});
+
+usersRouter.get('/:id', function(req, res, next) {
 
   User.find(function( err, dbUsers ){
     res.json( dbUsers );
