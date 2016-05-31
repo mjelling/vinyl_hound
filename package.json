@@ -1,0 +1,21 @@
+{
+  "name": "vinyl_hound",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "compression": "^1.6.2",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.4.2",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.19",
+    "morgan": "^1.7.0",
+    "path": "^0.12.7"
+  }
+}
