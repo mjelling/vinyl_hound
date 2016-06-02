@@ -1,3 +1,5 @@
+var dotenv = require('dotenv').config();
+
 var express         = require('express'),
     morgan          = require('morgan'),
     path            = require('path'),
@@ -8,11 +10,12 @@ var express         = require('express'),
     indexRouter     = require('./server/routes/index.js'),
     apiAuthRouter   = require('./server/routes/api/auth.js'),
     apiUsersRouter  = require('./server/routes/api/users.js'),
+    apiAlbumsRouter  = require('./server/routes/api/albums.js'),
     ejs             = require("ejs"),
+    LastFmNode      = require('lastfm').LastFmNode,
     compress        = require('compression');
 
-require('dotenv').config();
-
+    //SET UP LASTFM CLIENT
 
 // connect to db
 // process.env.MONGOLAB_URI is needed for when we deploy to Heroku
@@ -47,6 +50,7 @@ app.use(express.static('client/public'));
 app.use('/', indexRouter);
 app.use('/api/auth', apiAuthRouter);
 app.use('/api/users', apiUsersRouter);
+app.use('/api/albums', apiAlbumsRouter);
 
 
 

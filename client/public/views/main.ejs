@@ -1,10 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html ng-app='VinylHound'>
   <head>
     <meta charset="utf-8">
     <title>hello world</title>
+    <script src="/js/angular.min.js" charset="utf-8"></script>
+    <script src="/js/services/albumsAPI.js" charset="utf-8"></script>
+    <script src="/js/controllers/main.js" charset="utf-8"></script>
+    <script src="/js/app.js" charset="utf-8"></script>
+
   </head>
-  <body>
-    <h1>hello world</h1>
+  <body ng-controller="MainController">
+    <h1>New Record</h1>
+      <div class="box" id="record-input">
+        <h3>Input Record Name</h3>
+        <input type="text" name="record-title" class="record-title"><br>
+        <h3>Input your content</h3>
+        <input type="text" name="post-artist" class ="record-artist">
+        <button ng-click="postData()">Post</button>
+      </div>
+
+      <!-- <button ng-click='oneNewAlbum()'>New</button> -->
   </body>
 </html>

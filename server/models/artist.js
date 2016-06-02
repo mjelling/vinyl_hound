@@ -6,9 +6,8 @@ var artistSchema = mongoose.Schema({
   artist_name: { type: String, required: true },
   mbid: { type: String },
   connected_artists: { type: Array },
-  albums_ranked_name: { type: Array },
-  albums_ranked_id: {type: Array},
-  number_of_albums: { type: Integer },
+  albums_ranked: { type: Array },
+  number_of_albums: { type: Number },
   artist_image_url: { type: String }
   }, { timestamps: true });
 
