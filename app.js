@@ -12,6 +12,7 @@ var express         = require('express'),
     apiUsersRouter  = require('./server/routes/api/users.js'),
     apiAlbumsRouter  = require('./server/routes/api/albums.js'),
     apiArtistsRouter  = require('./server/routes/api/artists.js'),
+    apiCollectedRouter  = require('./server/routes/api/collected.js'),
     ejs             = require("ejs"),
     LastFmNode      = require('lastfm').LastFmNode,
     compress        = require('compression');
@@ -53,6 +54,7 @@ app.use('/api/auth', apiAuthRouter);
 app.use('/api/users', apiUsersRouter);
 app.use('/api/albums', apiAlbumsRouter);
 app.use('/api/artists', apiArtistsRouter);
+app.use('/api/collected', apiCollectedRouter);
 
 
 

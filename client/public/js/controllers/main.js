@@ -1,7 +1,7 @@
 angular
-  .module('mainController', ['AlbumsAPI', 'ArtistsAPI'])
-  .controller('MainController', ['$scope', '$http', 'albumsAPI', 'artistsAPI',
-    function( $scope, $http , albumsAPI, artistsAPI) {
+  .module('mainController', ['AlbumsAPI', 'ArtistsAPI', 'CollectedAPI'])
+  .controller('MainController', ['$scope', '$http', 'albumsAPI', 'artistsAPI', 'collectedAPI',
+    function( $scope, $http , albumsAPI, artistsAPI, collectedAPI) {
       // $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
       $scope.albums = [];
@@ -22,6 +22,24 @@ angular
            $scope.artists.push(response.data);
           })
         }
+        $scope.saveCollected = function(newCollected){
+          console.log("newCollected: ");
+          console.log(newCollected);
+          collectedAPI.save(newCollected).then(function(response) {
+            console.log(response);
+            $scope.collecteds.push(response.data);
+           })
+         }
+        $scope.saveCollectedNewNew = function(){
+          $scope.newCollected.collected.userID = Cookies.getJSON('current_user')._id;
+          $scope.newCollected.collected.username = Cookies.getJSON('current_user').username;
+          $scope.newCollected.collected.album_name = $scope.newAlbum.album.album_name;
+          $scope.newCollected.collected.album_mbid = $scope.newAlbum.album.mbid;
+          $scope.newCollected.collected.artist_name = $scope.newAlbum.album.artist_name;
+          console.log($scope.newCollected);
+          $scope.saveCollected($scope.newCollected);
+        }
+
 
       $scope.getAllAlbums =function(){
         albumsAPI.getAll().then(function(response){
@@ -81,6 +99,7 @@ angular
           };
           $scope.saveAlbum($scope.newAlbum);
           $scope.saveArtist($scope.newArtist);
+          $scope.saveCollectedNewNew();
           // if(!newAlbum.hasOwnProperty('album_rank')){
           //   newAlbum.album_rank = null;
           // }
@@ -113,10 +132,16 @@ angular
           album: {
           }
         };
-        $scope.querryArtist();
+        $scope.newCollected = {
+          collected: {
 
+          }
+        }
+        $scope.querryArtist();
+        //$scope.saveCollectedNewNew();
         console.log($scope.newArtist);
-        console.log($scope.newAlbum);
+
+        //console.log($scope.newAlbum.album);
         //$scope.saveAlbum($scope.newAlbum);
         //$scope.getAllAlbums();
         //console.log($scope.newArtist);

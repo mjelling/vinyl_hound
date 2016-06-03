@@ -3,14 +3,12 @@ var mongoose = require('mongoose');
 
 
 var collectedSchema = mongoose.Schema({
-  username: { type: String, required: true },
   userID: { type: String, required: true },
+  username: { type: String, required: true },
   album_name: { type: String, required: true },
-  albumID: { type: String, required: true },
-  mbid: { type: String },
-  artistID: { type: String },
+  album_mbid: { type: String },
   artist_name: {type: String, required: true},
-  album_quality: { type: Number, min: 0, max: 100, default: null },
+  album_quality: { type: Number, min: 0, max: 10, default: null }
   }, { timestamps: true });
 
 module.exports = mongoose.model('Collected', collectedSchema);
