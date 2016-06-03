@@ -1,9 +1,11 @@
 angular
-  .module('mainController', ['AlbumsAPI'])
-  .controller('MainController', ['$scope', '$http', 'albumsAPI',
-    function( $scope, $http , albumsAPI) {
+  .module('mainController', ['AlbumsAPI', 'ArtistsAPI'])
+  .controller('MainController', ['$scope', '$http', 'albumsAPI', 'artistsAPI',
+    function( $scope, $http , albumsAPI, artistsAPI) {
       // $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
 
+      $scope.albums = [];
+      $scope.artists = [];
       $scope.saveAlbum = function(newAlbum){
         console.log("newAlbum: ");
         console.log(newAlbum);
@@ -12,6 +14,14 @@ angular
           $scope.albums.push(response.data);
          })
        }
+       $scope.saveArtist = function(newArtist){
+         console.log("newArtist: ");
+         console.log(newArtist);
+         artistsAPI.save(newArtist).then(function(response) {
+           console.log(response);
+           $scope.artists.push(response.data);
+          })
+        }
 
       $scope.getAllAlbums =function(){
         albumsAPI.getAll().then(function(response){
@@ -70,6 +80,7 @@ angular
             };
           };
           $scope.saveAlbum($scope.newAlbum);
+          $scope.saveArtist($scope.newArtist);
           // if(!newAlbum.hasOwnProperty('album_rank')){
           //   newAlbum.album_rank = null;
           // }

@@ -5,15 +5,18 @@ angular
       return {
 
         getAll: function() {
-          return $http.get('/artists');
+          console.log('hello');
+          return $http.get('/api/artists');
         },
 
-        save: function(newFave) {
-          return $http.post('/artists', newFave);
+        save: function(newArtist) {
+          console.log("saving: ")
+          console.log(newArtist);
+          return $http.post('/api/artists/', newArtist );
         },
 
         remove: function(id) {
-          return $http.delete('/artists/'+id);
+          return $http.delete('/api/artists/'+id);
         }
       }
     }])

@@ -14,7 +14,9 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res, next) {
-  Artist.create(req.body.favorite, function(err, artist) {
+  console.log("artist posting");
+  console.log(req.body)
+  Artist.create(req.body.artist, function(err, artist) {
     if (err) {
       next(err);
     }else {

@@ -4,10 +4,10 @@ angular
     function($http) {
       return {
 
-        // getAll: function() {
-        //   console.log('hello');
-        //   return $http.get('/api/albums');
-        // },
+        getAll: function() {
+          console.log('hello');
+          return $http.get('/api/albums');
+        },
 
         save: function(newAlbum) {
           console.log("saving: ")
