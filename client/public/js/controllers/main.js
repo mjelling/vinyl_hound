@@ -6,6 +6,18 @@ angular
 
       $scope.albums = [];
       $scope.artists = [];
+      $scope.collecteds = [];
+      albumsAPI.getAll().then(function(response){
+        console.log(response);
+        $scope.albums = response.data;
+        console.log($scope.albums);
+      })
+      collectedAPI.getByUser("matt").then(function(response){
+        console.log(response);
+        $scope.collecteds = response.data;
+        console.log($scope.collecteds);
+      })
+
       $scope.saveAlbum = function(newAlbum){
         console.log("newAlbum: ");
         console.log(newAlbum);
@@ -31,7 +43,7 @@ angular
            })
          }
         $scope.saveCollectedNewNew = function(){
-          $scope.newCollected.collected.userID = Cookies.getJSON('current_user')._id;
+          $scope.newCollected.collected.userID = "1";
           $scope.newCollected.collected.username = Cookies.getJSON('current_user').username;
           $scope.newCollected.collected.album_name = $scope.newAlbum.album.album_name;
           $scope.newCollected.collected.album_mbid = $scope.newAlbum.album.mbid;

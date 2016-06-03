@@ -9,6 +9,11 @@ angular
           return $http.get('/api/collected');
         },
 
+        getByUser: function(username) {
+          console.log('getting by user');
+          return $http.get('/api/collected/'+username);
+        },
+
         save: function(newCollected) {
           console.log("saving: ")
           console.log(newCollected);

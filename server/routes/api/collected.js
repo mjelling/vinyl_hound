@@ -1,28 +1,39 @@
 //collected router
 var express = require('express');
 var router = express.Router();
-var Collected = require('../../models/album.js');
+var Collected = require('../../models/collected.js');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   console.log('woo');
-  Collected.find(function(err, albums) {
+  Collected.find(function(err, collecteds) {
     if (err) {
       next(err);
     }else {
-      res.json(albums);
+      res.json(collecteds);
+    }
+  })
+});
+
+router.get('/:username', function(req, res, next) {
+  console.log(req.params);
+  Collected.find({username: req.params.username }, function(err, collecteds) {
+    if (err) {
+      next(err);
+    }else {
+      res.json(collecteds);
     }
   })
 });
 
 router.post('/', function(req, res, next) {
-  console.log("BOOOOO-URNS");
+  console.log("collected posting");
   console.log(req.body)
-  Collected.create(req.body.album, function(err, album) {
+  Collected.create(req.body.collected, function(err, collected) {
     if (err) {
       next(err);
     }else {
-      res.json(album);
+      res.json(collected);
     }
   });
 });
