@@ -7,6 +7,12 @@ angular
       $scope.albums = [];
       $scope.artists = [];
       $scope.collecteds = [];
+      $scope.artistName = '';
+      $scope.albumName = '';
+      $scope.checkValues = function(){
+        console.log($scope.artistName);
+        console.log($scope.albumName);
+      }
       console.log(Cookies.getJSON('current_user')._id);
       albumsAPI.getAll().then(function(response){
         console.log(response);
