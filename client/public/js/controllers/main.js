@@ -67,8 +67,8 @@ angular
         })
       }
 
-      $scope.querryArtist = function(){
-        $http.get('http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=Cher&api_key=b1d845b005a877d1c8ec8023eee403c8&format=json').then(function(response){
+      $scope.querryArtist = function(artistName){
+        $http.get('http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist='+artistName+'&api_key=b1d845b005a877d1c8ec8023eee403c8&format=json').then(function(response){
           //console.log(response.data);
           var artistData = response.data.artist;
           //console.log(artistData.mbid);
@@ -81,11 +81,11 @@ angular
             newArtist.connected_artists.push(similarArtist);
           };
           newArtist.artist_image_url = artistData.image[3]["#text"];
-          $scope.querryTopAlbums();
+          $scope.querryTopAlbums($scope.artistName);
         })
       }
-      $scope.querryTopAlbums = function(){
-        $http.get('http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=Cher&api_key=b1d845b005a877d1c8ec8023eee403c8&format=json').then(function(response){
+      $scope.querryTopAlbums = function(artistName){
+        $http.get('http://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist='+artistName+'&api_key=b1d845b005a877d1c8ec8023eee403c8&format=json').then(function(response){
           //console.log(response.data);
           var newArtist = $scope.newArtist.artist;
           var artistBestData = response.data;
@@ -96,11 +96,11 @@ angular
           };
           //console.log(artistBestData);
           newArtist.number_of_albums = bestAlbumsArray.length;
-          $scope.querryAlbum();
+          $scope.querryAlbum($scope.artistName, $scope.albumName);
         })
       }
-      $scope.querryAlbum = function(){
-        $http.get('http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=b1d845b005a877d1c8ec8023eee403c8&artist=Cher&album=Believe&format=json').then(function(response){
+      $scope.querryAlbum = function(artistName, albumName){
+        $http.get('http://ws.audioscrobbler.com/2.0/?method=album.getinfo&api_key=b1d845b005a877d1c8ec8023eee403c8&artist='+artistName+'&album='+albumName+'&format=json').then(function(response){
           //console.log(response.data);
           var newAlbum = $scope.newAlbum.album;
           var albumInfo = response.data.album;
@@ -156,7 +156,7 @@ angular
 
           }
         }
-        $scope.querryArtist();
+        $scope.querryArtist($scope.artistName);
         //$scope.saveCollectedNewNew();
         console.log($scope.newArtist);
 
