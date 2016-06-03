@@ -7,12 +7,13 @@ angular
       $scope.albums = [];
       $scope.artists = [];
       $scope.collecteds = [];
+      console.log(Cookies.getJSON('current_user')._id);
       albumsAPI.getAll().then(function(response){
         console.log(response);
         $scope.albums = response.data;
         console.log($scope.albums);
       })
-      collectedAPI.getByUser("matt").then(function(response){
+      collectedAPI.getByUser(Cookies.getJSON('current_user')._id).then(function(response){
         console.log(response);
         $scope.collecteds = response.data;
         console.log($scope.collecteds);
@@ -43,7 +44,7 @@ angular
            })
          }
         $scope.saveCollectedNewNew = function(){
-          $scope.newCollected.collected.userID = "1";
+          $scope.newCollected.collected.userID = Cookies.getJSON('current_user')._id;
           $scope.newCollected.collected.username = Cookies.getJSON('current_user').username;
           $scope.newCollected.collected.album_name = $scope.newAlbum.album.album_name;
           $scope.newCollected.collected.album_mbid = $scope.newAlbum.album.mbid;

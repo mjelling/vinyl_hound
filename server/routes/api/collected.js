@@ -15,9 +15,9 @@ router.get('/', function(req, res, next) {
   })
 });
 
-router.get('/:username', function(req, res, next) {
+router.get('/:userID', function(req, res, next) {
   console.log(req.params);
-  Collected.find({username: req.params.username }, function(err, collecteds) {
+  Collected.find({userID: req.params.userID }, function(err, collecteds) {
     if (err) {
       next(err);
     }else {

@@ -9,9 +9,9 @@ angular
           return $http.get('/api/collected');
         },
 
-        getByUser: function(username) {
+        getByUser: function(userID) {
           console.log('getting by user');
-          return $http.get('/api/collected/'+username);
+          return $http.get('/api/collected/'+userID);
         },
 
         save: function(newCollected) {
