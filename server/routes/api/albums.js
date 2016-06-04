@@ -15,8 +15,19 @@ router.get('/', function(req, res, next) {
   })
 });
 
+router.get('/:artist_name', function(req, res, next) {
+  console.log(req.params);
+  Collected.find({artist_name: req.params.artist_name }, function(err, albums) {
+    if (err) {
+      next(err);
+    }else {
+      res.json(albums);
+    }
+  })
+});
+
 router.post('/', function(req, res, next) {
-  console.log("BOOOOO-URNS");
+  console.log("album posting");
   console.log(req.body)
   Album.create(req.body.album, function(err, album) {
     if (err) {

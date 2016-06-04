@@ -5,8 +5,13 @@ angular
       return {
 
         getAll: function() {
-          console.log('hello');
+          console.log('getting all albums');
           return $http.get('/api/albums');
+        },
+
+        getByArtist: function(artist_name) {
+          console.log('getting by artist name');
+          return $http.get('/api/collected/'+artist_name);
         },
 
         save: function(newAlbum) {

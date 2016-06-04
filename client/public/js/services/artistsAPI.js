@@ -5,7 +5,7 @@ angular
       return {
 
         getAll: function() {
-          console.log('hello');
+          console.log('getting all artists');
           return $http.get('/api/artists');
         },
 
