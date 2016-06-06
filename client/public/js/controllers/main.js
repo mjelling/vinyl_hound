@@ -157,7 +157,7 @@ angular
         console.log('postNewCollectedIfAlbumExists');
         for(var i=0; i<$scope.albums.length; i++){
           if($scope.albums[i].artist_name.toLowerCase().replace('the ', '')===artistName.toLowerCase().replace('+', ' ')&&$scope.albums[i].album_name.toLowerCase().replace('the ', '')===albumName.toLowerCase().replace('+', ' ')){
-            $scope.artistAndAlbumExists = true;
+            $scope.artistAndAlbum_exists = true;
             var newCollected = $scope.newCollected.collected;
             newCollected.userID = $scope.currentUserID;
             newCollected.username = $scope.currentUserName;
@@ -353,116 +353,152 @@ angular
           };
         };
       }
+
+
+      //recommendation building
+      //sets up point scheme for artists
+      $scope.pointsFunction = function(numCollected){
+        if(numCollected<=6){
+          return numCollected;
+        }
+        else if(numCollected===7){
+          return 5;
+        }
+        else if(numCollected===8){
+          return 4;
+        }
+        else{
+          return 3;
+        };
+      };
+
+      //Builds artistrecommendation data from albums
+      //once connected artists added
+      //applicable for noncollectedartist reccommendations
       $scope.buildArtistRecommendations = function(){
-        console.log("horse");
+        console.log('$scope.buildArtistRecommendations() called');
+        //Creates recommendationDataArray, and sets first object
         $scope.setRecommendationDataArray = function(){
-          $scope.recommendationData = [ { artist: $scope.collecteds[0].artist_name,
+          $scope.recommendationDataArray = [ { artist: $scope.collecteds[0].artist_name,
                                           numberOfCollected: 0,
                                           collectedRankings: []
                                         }
           ];
         };
         $scope.setRecommendationDataArray();
-        // function artistRecommendation(numberOfCollected, collectedRankings){
-        //   this.numberOfAlbums = numberOfCollected;
-        //   this.collectedRankings = collectedRankings;
-        // };
-        $scope.buildRecommendationData = function(){
+        //builds further artist objects and pushes them to
+        $scope.buildRecommendationDataAndPush = function(){
           console.log($scope.collecteds[0].artist_name);
-          $scope.pointsFunction = function(){
-            if(artistRecData.numberOfCollected<=6){
-              return artistRecData.numberOfCollected;
-            }
-            else if(artistRecData.numberOfCollected===7){
-              return 5;
-            }
-            else if(artistRecData.numberOfCollected===8){
-              return 4;
-            }
-            else{
-              return 3;
-            };
-          };
           for(var i=0; i<$scope.collecteds.length; i++){
             $scope.artistInRecommendation = false;
-            for(var x=0; x<$scope.recommendationData.length; x++){
-              if($scope.collecteds[i].artist_name === $scope.recommendationData[x].artist){
-                var artistRecData = $scope.recommendationData[x];
+            for(var x=0; x<$scope.recommendationDataArray.length; x++){
+              if($scope.collecteds[i].artist_name === $scope.recommendationDataArray[x].artist){
+                var artistRecData = $scope.recommendationDataArray[x];
                 $scope.artistInRecommendation = true;
                 artistRecData.numberOfCollected+=1;
                 artistRecData.collectedRankings.push($scope.collecteds[i].album_rank);
                 artistRecData.collectedRankings = artistRecData.collectedRankings.sort(function(a, b){return a-b});
-                artistRecData.artistPoints= $scope.pointsFunction();
+                artistRecData.artistPoints= $scope.pointsFunction(artistRecData.numberOfCollected);
               };
             };
             if(!$scope.artistInRecommendation){
               var artistRecData = { artist: $scope.collecteds[i].artist_name,
                                   numberOfCollected: 1,
                                   collectedRankings: [$scope.collecteds[i].album_rank],
-                                  artistPoints: $scope.pointsFunction()
+                                  artistPoints: $scope.pointsFunction(artistRecData.numberOfCollected)
                                   };
               artistRecData.collectedRankings = artistRecData.collectedRankings.sort(function(a, b){return a-b});
-              $scope.recommendationData.push(artistRecData);
+              $scope.recommendationDataArray.push(artistRecData);
             };
           };
-          $scope.recommendationData.sort(function(a, b){
+          $scope.recommendationDataArray.sort(function(a, b){
             return b.numberOfCollected-a.numberOfCollected
           });
         };
-        $scope.buildRecommendationData();
-        console.log($scope.recommendationData);
-        $scope.buildAlbumRecommendationArray = function(){
-          $scope.albumRecommendationArray = [];
-          console.log($scope.recommendationData);
-          for(var i=0; i<$scope.recommendationData.length; i++){
-            var numToRecommend = $scope.recommendationData[i].artistPoints;
+        $scope.buildRecommendationDataAndPush();
+        console.log('building recs and sending here: '+$scope.recommendationDataArray);
+        //use previousely made array of artist objects to push albums to
+        //reccommendations
+        $scope.sendTheAlbums = function(){
+          for(var i=0; i<$scope.recommendationDataArray.length; i++){
+            //set points of reference- number to recommend, place in rankings to begin,
+            //and albums thus pushed
+            var numToRecommend = $scope.recommendationDataArray[i].artistPoints;
             var startFrom = 1;
             var albumsPushed = 0;
-            console.log($scope.artistReciData);
-            console.log(numToRecommend);
-            console.log()
+            //get top albums from the album information from which the ranks already
+            //determined albums will be sent
             for(var x=0; x<$scope.artists.length; x++){
-              if($scope.recommendationData[i].artist===$scope.artists[x].artist_name){
+              if($scope.recommendationDataArray[i].artist===$scope.artists[x].artist_name){
                 topAlbumInfo = $scope.artists[x].albums_ranked;
-                console.log(topAlbumInfo);
               };
             };
-            for(var y=0; y<$scope.recommendationData[i].collectedRankings.length; y++){
-              if(albumsPushed===numToRecommend){
+            //iterates through the top albums
+            for(var y=0; y<$scope.recommendationDataArray[i].collectedRankings.length; y++){
+              //if you have hit your max stop
+              if(albumsPushed===numToRecommend||albumToPush>topAlbumInfo.length){
                 ('fail');
                 break;
               }
-              else if($scope.recommendationData[i].collectedRankings[y]===startFrom){
+              //if the rank is already collected raises place to start and kicks to top
+              else if($scope.recommendationDataArray[i].collectedRankings[y]===startFrom){
                 startFrom += 1;
               }
+              //otherwise pushes the album in that position, raise the next index to start from
+              //contines as long as you don't hit a collected
+              //if you hit recommendation limit breaks off function
               else{
                 var albumToPush = startFrom;
-                while(albumToPush !== $scope.recommendationData[i].collectedRankings[y]){
-                  $scope.albumRecommendationArray.push( { artist: $scope.recommendationData[i].artist, album: topAlbumInfo[albumToPush+1], albumExists: false, rank: startFrom + 2 });
-                  console.log('beeb');
+                while(albumToPush !== $scope.recommendationDataArray[i].collectedRankings[y]){
+                  $scope.albumRecommendationArray.push( { artist: $scope.recommendationDataArray[i].artist, album: topAlbumInfo[albumToPush+1], album_exists: false, rank: startFrom + 2 });
                   startFrom += 1;
                   albumToPush += 1;
                   //console.log('beep');
                   albumsPushed +=1;
                   console.log(albumsPushed);
                   console.log(numToRecommend);
-                  if(albumsPushed===numToRecommend){
+                  if(albumsPushed===numToRecommend||albumToPush>topAlbumInfo.length){
                     break;
                   };
                 };
                 startFrom += 1;
-              }
-            }
+              };
+            };
           };
+        }
+        //simply sets the $scope.albumRecommendationArray and calls
+        //$scope.sendTheAlbums()
+        $scope.buildAlbumRecommendationArray = function(){
+          //set empty array
+          $scope.albumRecommendationArray = [];
+          console.log('This is our data: '+$scope.recommendationDataArray);
+          $scope.sendTheAlbums();
+          //push the necessary albums to the array by iterating through
+          //top rated albums and skipping over ones already collected
+
           console.log($scope.albumRecommendationArray);
           for(var i=0; i<$scope.albumRecommendationArray.length; i++){
-            console.log($scope.albumRecommendationArray.album);
-            console.log($scope.albumRecommendationArray.artist);
+            $scope.artistNamePrep($scope.albumRecommendationArray[i].artist);
+            var collectedArtist = $scope.artistNamePrepped;
+            console.log(collectedArtist);
+            $scope.albumNamePrep($scope.albumRecommendationArray[i].album);
+            var collectedAlbum = $scope.albumNamePrepped;
+            // console.log($scope.albumRecommendationArray.album);
+            // console.log($scope.albumRecommendationArray.artist);
             var thisAlbum = $scope.albumRecommendationArray[i];
             for(var x=0; x<$scope.albums.length; x++){
-              if($scope.albums[x].artist_name===thisAlbum.artist&&$scope.albums[x].album_name===thisAlbum.album){
-                $scope.albumRecommendationArray[i].albumExists=true;
+              $scope.artistNamePrep($scope.albums[x].artist_name);
+              var loggedArtist = $scope.artistNamePrepped;
+              console.log(loggedArtist);
+              $scope.albumNamePrep($scope.albums[x].album_name);
+              var loggedAlbum = $scope.albumNamePrepped;
+              console.log($scope.artistNamePrepped);
+              if(collectedArtist===loggedArtist&&collectedAlbum===loggedAlbum){
+                $scope.albumRecommendationArray[i].album_exists=true;
               };
+              // if($scope.artistNamePrepped===thisAlbum.artist&&$scope.albumNamePrepped.album_name===thisAlbum.album){
+              //   $scope.albumRecommendationArray[i].album_exists=true;
+              // };
             };
             // for(var y=0; y<$scope.collecteds.length; y++){
             //   if($scope.collecteds[y].artist_name===thisAlbum[i].artist&&$scope.collecteds[y].album_name===thisAlbum[i].album){
@@ -470,47 +506,54 @@ angular
             //   };
             // };
           };
-          console.log($scope.albumRecommendationArray);
-          console.log($scope.recommendationData);
-          $scope.postingAlbumRecsToDB = function(array){
-            $scope.spliceTime = false;
-            console.log(array);
-            for(var i=0; i<array.length; i++){
-              if(array[i].name===' '||array[i].name===' '){
-                ('doing nothing');
-              }
-              else if(array[i].albumExists===false){
-                $scope.recRank = array[i].rank;
-                $scope.amPostingAlbumRecsToDB = true;
-                $scope.collectedSaving = false;
-                $scope.artistExists = true;
-                $scope.querryAndPostAlbumCollected($scope.artistNamePrepped, $scope.albumNamePrepped);
-              };
+        }
+        $scope.buildAlbumRecommendationArray();
+        //logs two created arrays to consul
+        console.log($scope.albumRecommendationArray);
+        console.log($scope.recommendationDataArray);
+        //if album exists in db, it does nothing, if it does not
+        //it sets collectedSaving boolean to false,formats album and artist_name and
+        //sends data to $scope.querryAndPostAlbumCollected()
+        $scope.postingAlbumRecsToDB = function(array){
+          console.log('callingfunction on: '+array);
+          console.log(array);
+          for(var i=0; i<array.length; i++){
+            if(array[i].name===' '||array[i].name===' '){
+              ('doing nothing');
+            }
+            else if(array[i].album_exists===false){
+              $scope.recRank = array[i].rank;
+              $scope.amPostingAlbumRecsToDB = true;
+              $scope.collectedSaving = false;
+              $scope.artistExists = true;
+              $scope.artistNamePrep(array[i].artist);
+              $scope.albumNamePrep(array[i].album);
+              $scope.querryAndPostAlbumCollected($scope.artistNamePrepped, $scope.albumNamePrepped);
             };
           };
-          console.log('boboob');
-          $scope.postingAlbumRecsToDB($scope.albumRecommendationArray);
-        }
+        };
+        console.log('boboob');
+        $scope.postingAlbumRecsToDB($scope.albumRecommendationArray);
         $scope.buildAlbumRecommendationArray();
         console.log($scope.albumRecommendationArray);
       }
-      console.log($scope.collecteds);
-      $scope.produceSimilarArtistRecs = function(){
-        if($scope.collecteds)
-        $scope.generateSimilarArtistData = function(){
-          $scope.eachArtistOfCollectedAlbums = [];
-          var workingArray = $scope.collectedArtistsArray;
-          var yourAlbums = $scope.collecteds;
-          for(var i=0; i<yourAlbums.length; i++){
-            workingArray.push($scope.yourAlbums[i].artist_name);
-          }
-          $scope.connectedArtists = [];
-          for(var i=0; i<workingArray.length; i++){
-            var artist = workingArray[i];
-
-          }
-        }
-      }
+      // console.log($scope.collecteds);
+      // $scope.produceSimilarArtistRecs = function(){
+      //   if($scope.collecteds)
+      //   $scope.generateSimilarArtistData = function(){
+      //     $scope.eachArtistOfCollectedAlbums = [];
+      //     var workingArray = $scope.collectedArtistsArray;
+      //     var yourAlbums = $scope.collecteds;
+      //     for(var i=0; i<yourAlbums.length; i++){
+      //       workingArray.push($scope.yourAlbums[i].artist_name);
+      //     }
+      //     $scope.connectedArtists = [];
+      //     for(var i=0; i<workingArray.length; i++){
+      //       var artist = workingArray[i];
+      //
+      //     }
+      //   }
+      // }
 
             // for(var x=0; x<$scope.artists.length; x++){
             //   if($scope.artistObjectsArray.length===0){
