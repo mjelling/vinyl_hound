@@ -15,7 +15,6 @@ var express         = require('express'),
     apiCollectedRouter  = require('./server/routes/api/collected.js'),
     apiBouncebacksRouter  = require('./server/routes/api/bouncebacks.js'),
     ejs             = require("ejs"),
-    LastFmNode      = require('lastfm').LastFmNode,
     compress        = require('compression');
 
     //SET UP LASTFM CLIENT
