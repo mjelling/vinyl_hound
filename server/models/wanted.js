@@ -10,7 +10,7 @@ var wantedSchema = mongoose.Schema({
   mbid: { type: String },
   artistID: { type: String },
   artist_name: {type: String, required: true},
-  album_quality: { type: Number, min: 0, max: 100, default: null },
+  album_quality: { type: Number, min: 0, max: 100, default: null }
   }, { timestamps: true });
 
 module.exports = mongoose.model('Wanted', wantedSchema);

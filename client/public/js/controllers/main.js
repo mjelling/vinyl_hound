@@ -1,7 +1,7 @@
 angular
-  .module('mainController', ['AlbumsAPI', 'ArtistsAPI', 'CollectedAPI'])
-  .controller('MainController', ['$scope', '$http', 'albumsAPI', 'artistsAPI', 'collectedAPI',
-    function( $scope, $http , albumsAPI, artistsAPI, collectedAPI) {
+  .module('mainController', ['AlbumsAPI', 'ArtistsAPI', 'CollectedAPI', 'BouncebacksAPI'])
+  .controller('MainController', ['$scope', '$http', 'albumsAPI', 'artistsAPI', 'collectedAPI', 'bouncebacksAPI',
+    function( $scope, $http , albumsAPI, artistsAPI, collectedAPI, bouncebacksAPI) {
       // $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
       $scope.currentUserID = Cookies.getJSON('current_user')._id;
       $scope.currentUserName = Cookies.getJSON('current_user').username;
@@ -29,6 +29,8 @@ angular
 
         }
       }
+
+      $scope.bouncebacksData = [];
 
       $scope.collectedSaving = true;
       $scope.amPostingAlbumRecsToDB = false;
@@ -74,10 +76,19 @@ angular
         })
       };
 
+      $scope.getAllBouncebacks = function(){
+        collectedAPI.getByUser($scope.currentUserID).then(function(response){
+          console.log(response);
+          $scope.bouncebacks = response.data;
+          console.log($scope.bouncebacks);
+        })
+      };
+
       $scope.callAPIs = function(){
         $scope.getAllAlbums();
         $scope.getAllArtists();
         $scope.getAllCollected();
+        $scope.getAllBouncebacks();
       }
       $scope.callAPIs();
 
@@ -194,7 +205,7 @@ angular
               alert("That album Can't be found");
             }
             else{
-              console.log("no album found");
+              console.log(albumName+" no album found");
             };
           }
           else {
@@ -344,32 +355,35 @@ angular
       }
       $scope.buildArtistRecommendations = function(){
         console.log("horse");
-        $scope.recommendationData = [ { artist: $scope.collecteds[0].artist_name,
-                                        numberOfCollected: 0,
-                                        collectedRankings: []
-                                      }
-        ];
+        $scope.setRecommendationDataArray = function(){
+          $scope.recommendationData = [ { artist: $scope.collecteds[0].artist_name,
+                                          numberOfCollected: 0,
+                                          collectedRankings: []
+                                        }
+          ];
+        };
+        $scope.setRecommendationDataArray();
         // function artistRecommendation(numberOfCollected, collectedRankings){
         //   this.numberOfAlbums = numberOfCollected;
         //   this.collectedRankings = collectedRankings;
         // };
         $scope.buildRecommendationData = function(){
           console.log($scope.collecteds[0].artist_name);
-          for(var i=0; i<$scope.collecteds.length; i++){
-            $scope.pointsFunction = function(){
-              if(artistRecData.numberOfCollected<=6){
-                return artistRecData.numberOfCollected;
-              }
-              else if(artistRecData.numberOfCollected===7){
-                return 5;
-              }
-              else if(artistRecData.numberOfCollected===8){
-                return 4;
-              }
-              else{
-                return 3;
-              };
+          $scope.pointsFunction = function(){
+            if(artistRecData.numberOfCollected<=6){
+              return artistRecData.numberOfCollected;
             }
+            else if(artistRecData.numberOfCollected===7){
+              return 5;
+            }
+            else if(artistRecData.numberOfCollected===8){
+              return 4;
+            }
+            else{
+              return 3;
+            };
+          };
+          for(var i=0; i<$scope.collecteds.length; i++){
             $scope.artistInRecommendation = false;
             for(var x=0; x<$scope.recommendationData.length; x++){
               if($scope.collecteds[i].artist_name === $scope.recommendationData[x].artist){
@@ -459,23 +473,53 @@ angular
           console.log($scope.albumRecommendationArray);
           console.log($scope.recommendationData);
           $scope.postingAlbumRecsToDB = function(array){
+            $scope.spliceTime = false;
+            console.log(array);
             for(var i=0; i<array.length; i++){
-              if(array[i].albumExists===false){
+              if(array[i].name===' '||array[i].name===' '){
+                ('doing nothing');
+              }
+              else if(array[i].albumExists===false){
                 $scope.recRank = array[i].rank;
                 $scope.amPostingAlbumRecsToDB = true;
                 $scope.collectedSaving = false;
                 $scope.artistExists = true;
-                $scope.artistNamePrep(array[i].artist);
-                $scope.querryAndPostAlbumCollected($scope.artistNamePrepped, array[i].album.toLowerCase().replace(' ', '+'));
+                $scope.querryAndPostAlbumCollected($scope.artistNamePrepped, $scope.albumNamePrepped);
               };
             };
           };
+          console.log('boboob');
           $scope.postingAlbumRecsToDB($scope.albumRecommendationArray);
         }
         $scope.buildAlbumRecommendationArray();
         console.log($scope.albumRecommendationArray);
-
       }
+      console.log($scope.collecteds);
+      $scope.produceSimilarArtistRecs = function(){
+        if($scope.collecteds)
+        $scope.generateSimilarArtistData = function(){
+          $scope.eachArtistOfCollectedAlbums = [];
+          var workingArray = $scope.collectedArtistsArray;
+          var yourAlbums = $scope.collecteds;
+          for(var i=0; i<yourAlbums.length; i++){
+            workingArray.push($scope.yourAlbums[i].artist_name);
+          }
+          $scope.connectedArtists = [];
+          for(var i=0; i<workingArray.length; i++){
+            var artist = workingArray[i];
+
+          }
+        }
+      }
+
+            // for(var x=0; x<$scope.artists.length; x++){
+            //   if($scope.artistObjectsArray.length===0){
+            //
+            //   }
+            //   if($scope.artists[x]===artist){
+            //     var artistObject = { };
+            //   }
+            // }
 
 
 
