@@ -2,6 +2,9 @@
   "name": "vinyl_hound",
   "version": "1.0.0",
   "description": "Vinyl Hound",
+  "engines": {
+    "node": "5.11.0"
+  }
   "main": "app.js",
   "scripts": {
     "start": "node app.js"
