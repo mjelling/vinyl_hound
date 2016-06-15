@@ -157,7 +157,7 @@ angular
         console.log('postNewCollectedIfAlbumExists');
         for(var i=0; i<$scope.albums.length; i++){
           if($scope.albums[i].artist_name.toLowerCase().replace('the ', '')===artistName.toLowerCase().replace('+', ' ')&&$scope.albums[i].album_name.toLowerCase().replace('the ', '')===albumName.toLowerCase().replace('+', ' ')){
-            $scope.artistAndAlbum_exists = true;
+            $scope.artistAndAlbumExists = true;
             var newCollected = $scope.newCollected.collected;
             newCollected.userID = $scope.currentUserID;
             newCollected.username = $scope.currentUserName;
@@ -417,6 +417,7 @@ angular
         };
         $scope.buildRecommendationDataAndPush();
         console.log('building recs and sending here: '+$scope.recommendationDataArray);
+        console.log($scope.recommendationDataArray);
         //use previousely made array of artist objects to push albums to
         //reccommendations
         $scope.sendTheAlbums = function(){
@@ -436,8 +437,8 @@ angular
             //iterates through the top albums
             for(var y=0; y<$scope.recommendationDataArray[i].collectedRankings.length; y++){
               //if you have hit your max stop
-              if(albumsPushed===numToRecommend||albumToPush>topAlbumInfo.length){
-                ('fail');
+              if(albumsPushed===numToRecommend){
+                console.log('fail');
                 break;
               }
               //if the rank is already collected raises place to start and kicks to top
@@ -449,8 +450,10 @@ angular
               //if you hit recommendation limit breaks off function
               else{
                 var albumToPush = startFrom;
+                console.log(albumToPush);
+                console.log(topAlbumInfo);
                 while(albumToPush !== $scope.recommendationDataArray[i].collectedRankings[y]){
-                  $scope.albumRecommendationArray.push( { artist: $scope.recommendationDataArray[i].artist, album: topAlbumInfo[albumToPush+1], album_exists: false, rank: startFrom + 2 });
+                  $scope.albumRecommendationArray.push( { artist: $scope.recommendationDataArray[i].artist, album: topAlbumInfo[albumToPush-1], album_exists: false, rank: startFrom });
                   startFrom += 1;
                   albumToPush += 1;
                   //console.log('beep');
@@ -622,9 +625,7 @@ angular
         $scope.getAllArtists();
         $scope.getAllCollected();
       }
-      $scope.donkeyShit = function(){
-        console.log('bbbbbbb');
-      }
+
       $scope.postData = function(){
         $scope.collectedSaving = true;
         $scope.artistNamePrep($scope.artistName);
