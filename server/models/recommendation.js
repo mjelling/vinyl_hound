@@ -3,8 +3,8 @@ var mongoose = require('mongoose');
 
 
 var recommendationSchema = mongoose.Schema({
-  username: { type: String, required: true },
   userID: { type: String, required: true },
+  username: { type: String, required: true },
   recommended_records: { type: Array, required: true }
   }, { timestamps: true });
 

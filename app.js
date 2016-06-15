@@ -14,6 +14,7 @@ var express         = require('express'),
     apiArtistsRouter  = require('./server/routes/api/artists.js'),
     apiCollectedRouter  = require('./server/routes/api/collected.js'),
     apiBouncebacksRouter  = require('./server/routes/api/bouncebacks.js'),
+    apiRecommendationsRouter  = require('./server/routes/api/recommendations.js'),
     ejs             = require("ejs"),
     compress        = require('compression');
 
@@ -56,6 +57,7 @@ app.use('/api/albums', apiAlbumsRouter);
 app.use('/api/artists', apiArtistsRouter);
 app.use('/api/collected', apiCollectedRouter);
 app.use('/api/bouncebacks', apiBouncebacksRouter);
+app.use('/api/recommendations', apiRecommendationsRouter);
 
 
 

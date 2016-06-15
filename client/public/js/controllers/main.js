@@ -1,7 +1,7 @@
 angular
-  .module('mainController', ['AlbumsAPI', 'ArtistsAPI', 'CollectedAPI', 'BouncebacksAPI'])
-  .controller('MainController', ['$scope', '$http', 'albumsAPI', 'artistsAPI', 'collectedAPI', 'bouncebacksAPI',
-    function( $scope, $http , albumsAPI, artistsAPI, collectedAPI, bouncebacksAPI) {
+  .module('mainController', ['AlbumsAPI', 'ArtistsAPI', 'CollectedAPI', 'BouncebacksAPI', 'RecommendationsAPI'])
+  .controller('MainController', ['$scope', '$http', 'albumsAPI', 'artistsAPI', 'collectedAPI', 'bouncebacksAPI', 'recommendationsAPI',
+    function( $scope, $http , albumsAPI, artistsAPI, collectedAPI, bouncebacksAPI, recommendationsAPI) {
       // $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
       $scope.currentUserID = Cookies.getJSON('current_user')._id;
       $scope.currentUserName = Cookies.getJSON('current_user').username;
@@ -68,13 +68,21 @@ angular
           console.log($scope.artists);
         })
       };
-      $scope.getAllCollected = function(){
+      $scope.getCollectedByUser = function(){
         collectedAPI.getByUser($scope.currentUserID).then(function(response){
           console.log(response);
           $scope.collecteds = response.data;
           console.log($scope.collecteds);
         })
       };
+      $scope.getRecommendationsByUser = function(){
+        recommendationsAPI.getByUser($scope.currentUserID).then(function(response){
+          console.log(response);
+          $scope.recommendations = response.data;
+          console.log($scope.recommendations);
+        })
+      };
+
 
       $scope.getAllBouncebacks = function(){
         collectedAPI.getByUser($scope.currentUserID).then(function(response){
@@ -87,8 +95,9 @@ angular
       $scope.callAPIs = function(){
         $scope.getAllAlbums();
         $scope.getAllArtists();
-        $scope.getAllCollected();
+        $scope.getCollectedByUser();
         $scope.getAllBouncebacks();
+        $scope.getRecommendationsByUser();
       }
       $scope.callAPIs();
 
@@ -117,9 +126,18 @@ angular
           collectedAPI.save(newCollected).then(function(response) {
             console.log(response);
             $scope.collecteds.push(response.data);
-            $scope.getAllCollected();
+            $scope.getCollectedByUser();
            })
          }
+         $scope.saveRecommendations = function(newRecommendations){
+           console.log("newRecommendations: ");
+           console.log(newRecommendations);
+           recommendationsAPI.save(newRecommendations).then(function(response) {
+             console.log(response);
+             $scope.recommendations.push(response.data);
+             $scope.getRecommendationsByUser();
+            })
+          }
 
 
       $scope.getAllAlbums = function(){
@@ -535,11 +553,26 @@ angular
             };
           };
         };
+        $scope.buildAlbumRecsWithCovers = function(){
+          for(var i=0; i<$scope.albumRecommendationArray.length; i++){
+            for(var x=0; x<$scope.albums.length; x++){
+              if($scope.albumRecommendationArray[i].album===$scope.albums[x].album_name){
+                $scope.albumRecommendationArray[i].album_cover_url = $scope.albums[x].album_cover_url;
+              };
+            };
+          };
+        };
         console.log('boboob');
         $scope.postingAlbumRecsToDB($scope.albumRecommendationArray);
         $scope.buildAlbumRecommendationArray();
+        $scope.buildAlbumRecsWithCovers();
         console.log($scope.albumRecommendationArray);
+        $scope.newRecommendations = { recommendation: { userID: $scope.currentUserID,
+        username: $scope.currentUserName, recommended_records: $scope.albumRecommendationArray } };
+        $scope.saveRecommendations($scope.newRecommendations);
       }
+
+
       // console.log($scope.collecteds);
       // $scope.produceSimilarArtistRecs = function(){
       //   if($scope.collecteds)
@@ -623,7 +656,7 @@ angular
       $scope.callAPIs = function(){
         $scope.getAllAlbums();
         $scope.getAllArtists();
-        $scope.getAllCollected();
+        $scope.getCollectedByUser();
       }
 
       $scope.postData = function(){
