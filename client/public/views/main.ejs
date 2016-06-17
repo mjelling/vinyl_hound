@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>hello world</title>
+    <link rel="stylesheet" href="../css/main.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.1/js.cookie.min.js" charset="utf-8"></script>
     <script src="/js/angular.min.js" charset="utf-8"></script>
     <script src="/js/services/albumsAPI.js" charset="utf-8"></script>
@@ -15,15 +16,37 @@
 
   </head>
   <body ng-controller="MainController">
-    <h1>New Record</h1>
+    <div class="top">
+      <h1>Vinyl Hound</h1>
+    </div>
+    <div class="middle">
+    <h2>Throw In a New Record</h2>
       <div class="box" id="record-input">
-        <h3>Input Record Name</h3>
-        <input type="text" name="record-title" class="record-title" ng-model="albumName"><br>
-        <h3>Input your content</h3>
-        <input type= "text" name="post-artist" class ="record-artist" ng-model="artistName">
+        <input type="text" name="record-title" class="record-title" placeholder="Title"  ng-model="albumName"><br>
+        <input type= "text" name="post-artist" class ="record-artist" placeholder="Artist"  ng-model="artistName">
         <button ng-click="postData()">Post</button>
-        <button ng-click="buildArtistRecommendations()">Hair</button>
+        <button ng-click="buildArtistRecommendations()">Get recs</button>
       </div>
+    </div>
+    <div class= "albums-first">
+      <div class="container">
+        <ul class="collecteds">
+          <li ng-repeat="collected in collecteds | filter:query | orderBy:id" class="thumbnail" >
+            <a href="#/collecteds/{{collected.id}}" class="thumb"><img ng-src="{{collected.album_cover_url}}" alt=”{{phone.album_name}}”><ng-mouseover="{{collected.album_name}}, {{collected.artist_name}}"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="albums-second">
+      <div class="container">
+        <ul class="recommends">
+          <li ng-repeat="recommend in recommends | filter:query | orderBy:id" class="thumbnail">
+            <a href="#/recommends/{{recommend.id}}" class="thumb"><img ng-src="{{recommend.album_cover_url}}" alt= "{{recommend.album}}, {{recommend.artist}}" height="300px" width="300px" background-color="black"></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <h1>{{ currentAlbum }}</h1>
 
       <!-- <button ng-click='oneNewAlbum()'>New</button> -->
   </body>

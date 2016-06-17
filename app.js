@@ -18,8 +18,6 @@ var express         = require('express'),
     ejs             = require("ejs"),
     compress        = require('compression');
 
-    //SET UP LASTFM CLIENT
-
 // connect to db
 // process.env.MONGOLAB_URI is needed for when we deploy to Heroku
 mongoose.connect( process.env.MONGODB_URI || "mongodb://localhost/vinyl_hound" );

@@ -8,9 +8,13 @@ angular
       $scope.albums = [];
       $scope.artists = [];
       $scope.collecteds = [];
+      $scope.recommendations = [];
+      $scope.recommends = [];
+
 
       $scope.artistName;
       $scope.albumName;
+      $scope.currentAlbum;
       $scope.artistNamePrepped;
       $scope.albumNamePrepped;
 
@@ -35,6 +39,11 @@ angular
       $scope.collectedSaving = true;
       $scope.amPostingAlbumRecsToDB = false;
 
+      $scope.formatCollected = function(album, artist){
+        console.log('pop');
+        $scope.currentName= album+", "+artist;
+        console.log($scope.currentName);
+      }
       $scope.artistNamePrep = function(name){
         $scope.artistNamePrepped = name;
         if(name.substring(0,3).toLowerCase()==='the'){
@@ -79,7 +88,9 @@ angular
         recommendationsAPI.getByUser($scope.currentUserID).then(function(response){
           console.log(response);
           $scope.recommendations = response.data;
+          $scope.recommends = $scope.recommendations[$scope.recommendations.length-1].recommended_records;
           console.log($scope.recommendations);
+          console.log($scope.recommends);
         })
       };
 

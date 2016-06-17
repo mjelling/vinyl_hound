@@ -1,3 +1,68 @@
 body{
   background-color: lightblue;
 }
+h1{
+  margin-bottom: 0%;
+  padding-bottom: 0%;
+}
+ul {
+  overflow: auto;
+  page-break-after: always;
+}
+li{
+display: inline;
+list-style-type: none;
+padding-right: 20px;
+white-space: nowrap;
+}
+
+img{
+  width: 13%;
+  height: 13%;
+}
+
+.container{
+  overflow: scroll;
+}
+
+.top{
+  margin-left: 1.82%;
+  padding-left: 1.82%;
+  height: 10%;
+}
+.middle{
+  height: 16%;
+  margin-left: 1.82%;
+  padding-left: 1.82%;
+  padding-bottom: 4%;
+
+}
+
+.albums-first{
+  height: 31%;
+  padding-top: 2%;
+  padding-bottom: 1%;
+  border-top: 2%;
+  border-bottom: 2%;
+  border-top-left-radius: 3em;
+  border-top-right-radius: 3em;
+  background-color: black;
+  margin-left: 3.82%;
+  margin-right: 3.82%;
+  padding-left: 1.82%;
+  padding-right: 3.82%;
+}
+.albums-second{
+  height: 31%;
+  padding-top: 0%;
+  padding-bottom: 2%;
+  border-top: 2%;
+  border-bottom: 2%;
+  border-bottom-left-radius: 3em;
+  border-bottom-right-radius: 3em;
+  background-color: black;
+  margin-left: 3.82%;
+  margin-right: 3.82%;
+  padding-left: 1.82%;
+  padding-right: 3.82%;
+}
