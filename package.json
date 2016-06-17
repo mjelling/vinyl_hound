@@ -2,19 +2,17 @@
   "name": "vinyl_hound",
   "version": "1.0.0",
   "description": "Vinyl Hound",
-  "engines": {
-    "node": "5.11.0",
-  },
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "author": "",
+  "license": "ISC",
   "repository": {
     "type": "git",
     "url": "git +https://github.com/mjelling/vinyl_hound.git"
   },
-  "author": "",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/mjelling/vinyl_hound/issues"
   },
@@ -23,12 +21,12 @@
     "bcryptjs": "^2.3.0",
     "body-parser": "^1.15.1",
     "compression": "^1.6.2",
-    "cookie-parser": "^1.4.3",
+    "cookie-parser": "^1.4.1",
     "dotenv": "^2.0.0",
-    "ejs": "^2.4.2",
+    "ejs": "^2.4.1",
     "express": "^4.13.4",
-    "jsonwebtoken": "^7.0.0",
-    "mongoose": "^4.4.19",
+    "jsonwebtoken": "^5.7.0",
+    "mongoose": "^4.4.14",
     "morgan": "^1.7.0",
     "passport": "^0.3.2",
     "passport-jwt": "^2.0.0",
