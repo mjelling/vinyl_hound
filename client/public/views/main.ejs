@@ -42,7 +42,7 @@
     <div class="albums-second">
       <div class="container">
         <ul class="recommends">
-          <li ng-repeat="recommend in recommends | filter:query | orderBy:id" class="thumbnail" ng-mouseover="formatCollected(recommend.album, recommemd.artist)">
+          <li ng-repeat="recommend in recommends | filter:query | orderBy:id" class="thumbnail" ng-mouseover="formatCollected(recommend.album, recommend.artist)">
             <a href="#/recommends/{{recommend.id}}" class="thumb"><img ng-src="{{recommend.album_cover_url || 'http://images5.fanpop.com/image/photos/26000000/Boo-Boo-the-huckleberry-hound-show-26019702-500-500.png'}}" height="300px" width="300px"></a>
           </li>
         </ul>
