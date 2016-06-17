@@ -39,6 +39,9 @@ angular
       $scope.collectedSaving = true;
       $scope.amPostingAlbumRecsToDB = false;
 
+      $scope.consoleLog = function(){
+        console.log('mousing over');
+      }
       $scope.formatCollected = function(album, artist){
         console.log('pop');
         $scope.currentName= album+", "+artist;

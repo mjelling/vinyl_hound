@@ -1,9 +1,98 @@
 body{
   background-color: lightblue;
+  font-family: metal mania;
+  background-image: url('http://www.freebiesgallery.com/wp-content/uploads/2013/09/blue-background-2.jpg');
+  background-size: cover;
 }
 h1{
   margin-bottom: 0%;
   padding-bottom: 0%;
+}
+h2{
+  margin-top: 0%;
+  padding-top: 0%;
+  padding-left: 0%;
+  margin-bottom: .5%;
+  padding-bottom: .5%;
+}
+
+
+#dap_text_box
+{
+background: black;
+color: white;
+border:2px solid black;
+border-radius:7px ;
+font-size:14px ;
+font-family: metal mania;
+height: 18.5px ;
+line-height:20px ;
+width: 165px ;
+margin-bottom: 4px;
+padding: 4px ;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+  color: white;
+}
+::-moz-placeholder { /* Firefox 19+ */
+  color: white;
+}
+:-ms-input-placeholder { /* IE 10+ */
+  color: white;
+}
+:-moz-placeholder { /* Firefox 18- */
+  color: white;
+}
+
+.myButton {
+	-moz-box-shadow: 0px 10px 14px -7px #276873;
+	-webkit-box-shadow: 0px 10px 14px -7px #276873;
+	box-shadow: 0px 10px 14px -7px #276873;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #599bb3), color-stop(1, #408c99));
+	background:-moz-linear-gradient(top, #599bb3 5%, #408c99 100%);
+	background:-webkit-linear-gradient(top, #599bb3 5%, #408c99 100%);
+	background:-o-linear-gradient(top, #599bb3 5%, #408c99 100%);
+	background:-ms-linear-gradient(top, #599bb3 5%, #408c99 100%);
+	background:linear-gradient(to bottom, #599bb3 5%, #408c99 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#599bb3', endColorstr='#408c99',GradientType=0);
+	background-color:#599bb3;
+	-moz-border-radius:8px;
+	-webkit-border-radius:8px;
+	border-radius:8px;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family: metal mania;
+	font-size:14px;
+	font-weight:bold;
+	padding:8px 17px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #3d768a;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #408c99), color-stop(1, #599bb3));
+	background:-moz-linear-gradient(top, #408c99 5%, #599bb3 100%);
+	background:-webkit-linear-gradient(top, #408c99 5%, #599bb3 100%);
+	background:-o-linear-gradient(top, #408c99 5%, #599bb3 100%);
+	background:-ms-linear-gradient(top, #408c99 5%, #599bb3 100%);
+	background:linear-gradient(to bottom, #408c99 5%, #599bb3 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#408c99', endColorstr='#599bb3',GradientType=0);
+	background-color:#408c99;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+
+h4{
+  margin-top: 0%;
+  padding-top: 0%;
+  padding-left: 3.5%;
+  margin-bottom: 0%;
+  padding-bottom: 0%;
+  color: #FEFEFA;
 }
 ul {
   overflow: auto;
@@ -12,13 +101,32 @@ ul {
 li{
 display: inline;
 list-style-type: none;
-padding-right: 20px;
+padding-right: 3%;
+padding-left: 3%;
 white-space: nowrap;
+background-color: white;
 }
 
 img{
-  width: 13%;
-  height: 13%;
+  width: 11%;
+  height: 11%;
+  border: 2px solid darkgrey;
+}
+
+#hound{
+  position: fixed;
+  right: 7%;
+  top: 7%;
+  height: 28%;
+  border: none;
+
+}
+#hound-index{
+  position: fixed;
+  right: 55%;
+  bottom: 18%;
+  height: 80%;
+  border: none;
 }
 
 .container{
@@ -26,21 +134,28 @@ img{
 }
 
 .top{
-  margin-left: 1.82%;
-  padding-left: 1.82%;
+  margin-left: 2%;
+  padding-left: 3%;
   height: 10%;
+  padding-bottom: 2%;
 }
-.middle{
-  height: 16%;
+.bottom{
   margin-left: 1.82%;
-  padding-left: 1.82%;
-  padding-bottom: 4%;
-
+  padding-top:1%
+  margin-top: 1%;
+  padding-left: 3%;
 }
-
+#album-filler {
+  position: relative;
+  right: 8%;
+  font-size: .3%;
+  padding-top: 6%;
+  margin-top: 6%;
+}
 .albums-first{
   height: 31%;
   padding-top: 2%;
+  margin-top: -1%;
   padding-bottom: 1%;
   border-top: 2%;
   border-bottom: 2%;
@@ -57,7 +172,7 @@ img{
   padding-top: 0%;
   padding-bottom: 2%;
   border-top: 2%;
-  border-bottom: 2%;
+  border-bottom: 2.5%;
   border-bottom-left-radius: 3em;
   border-bottom-right-radius: 3em;
   background-color: black;
@@ -65,4 +180,5 @@ img{
   margin-right: 3.82%;
   padding-left: 1.82%;
   padding-right: 3.82%;
+  z-index: -2;
 }
