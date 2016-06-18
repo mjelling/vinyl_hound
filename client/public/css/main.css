@@ -132,15 +132,15 @@ a{
 }
 
 #head-back{
-  position: fixed;
+  position: absolute;
   right: 5%;
-  top: 25px;
+  top: 4.2%;
 }
 #hound{
-  position: fixed;
+  position: absolute;
   right: 7%;
-  top: 50px;
-  height: 160px;
+  top: 8.5%;
+  height: 170px;
   border: none;
 
 }
