@@ -696,6 +696,8 @@ angular
           }
         }
         $scope.querryArtist($scope.artistNamePrepped, $scope.albumNamePrepped);
+        $scope.artistName = "";
+        $scope.albumName = "";
         //$scope.artistName.replace('the ', '').replace(' ', '+'), $scope.albumName.replace('the ', '').replace(' ', '+')
         //$scope.saveCollectedNewNew();
         //console.log($scope.newArtist);

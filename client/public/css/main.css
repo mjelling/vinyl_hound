@@ -108,11 +108,21 @@ background-color: white;
 }
 
 img{
-  width: 11%;
-  height: 11%;
+  width: 9.5%;
+  height: 9.5%;
   border: 2px solid darkgrey;
 }
 
+a{
+  text-decoration: none;
+  font-size: 1.25em;
+}
+
+#log-in{
+  position: fixed;
+  right: 2%;
+  top: 2%;
+}
 #hound{
   position: fixed;
   right: 7%;
