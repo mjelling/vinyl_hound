@@ -32,6 +32,7 @@ margin-bottom: 4px;
 padding: 4px ;
 }
 
+
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: white;
 }
@@ -85,6 +86,14 @@ padding: 4px ;
 	top:1px;
 }
 
+#delete-button{
+  position: relative;
+  right: 2.8%;
+  height: 2.425%;
+  width: 2.425%;
+  border: none;
+}
+
 
 h4{
   margin-top: 0%;
@@ -101,16 +110,16 @@ ul {
 li{
 display: inline;
 list-style-type: none;
-padding-right: 3%;
-padding-left: 3%;
+padding-right: 0%;
+padding-left: 5.6%;
 white-space: nowrap;
 background-color: white;
 }
 
 img{
-  width: 9.5%;
-  height: 9.5%;
-  border: 2px solid darkgrey;
+  width: 10%;
+  height: 10%;
+  border: 1px solid darkgrey;
 }
 
 a{
@@ -118,16 +127,20 @@ a{
   font-size: 1.25em;
 }
 
+#yours{
+  margin-left: -2.9%;
+}
+
 #head-back{
   position: fixed;
-  right: 2%;
-  top: 2%;
+  right: 5%;
+  top: 25px;
 }
 #hound{
   position: fixed;
   right: 7%;
-  top: 7%;
-  height: 28%;
+  top: 50px;
+  height: 160px;
   border: none;
 
 }

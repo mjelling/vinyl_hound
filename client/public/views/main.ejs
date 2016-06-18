@@ -34,7 +34,8 @@
       <div class="container">
         <ul class="collecteds">
           <li ng-repeat="collected in collecteds | filter:query | orderBy:id" class="thumbnail" ng-mouseover="formatCollected(collected.album_name, collected.artist_name)">
-            <a href="#/collecteds/{{collected.id}}" class="thumb"><img ng-src="{{collected.album_cover_url || 'http://images5.fanpop.com/image/photos/26000000/Boo-Boo-the-huckleberry-hound-show-26019702-500-500.png'}}" height="300px" width="300px"></a>
+            <img id="delete-button" src="../images/delete_trans.png" ng-click="removeCollected(collected)">
+            <a href="#/collecteds/{{collected.id}}" class="thumb"><img id="yours" ng-src="{{collected.album_cover_url || 'http://images5.fanpop.com/image/photos/26000000/Boo-Boo-the-huckleberry-hound-show-26019702-500-500.png'}}" height="300px" width="300px"></a>
           </li>
         </ul>
         <h4>Your Collection</h4>

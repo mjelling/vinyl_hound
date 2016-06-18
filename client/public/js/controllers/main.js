@@ -1,7 +1,7 @@
 angular
   .module('mainController', ['AlbumsAPI', 'ArtistsAPI', 'CollectedAPI', 'BouncebacksAPI', 'RecommendationsAPI'])
-  .controller('MainController', ['$scope', '$http', 'albumsAPI', 'artistsAPI', 'collectedAPI', 'bouncebacksAPI', 'recommendationsAPI',
-    function( $scope, $http , albumsAPI, artistsAPI, collectedAPI, bouncebacksAPI, recommendationsAPI) {
+  .controller('MainController', ['$scope', '$http', '$interval', 'albumsAPI', 'artistsAPI', 'collectedAPI', 'bouncebacksAPI', 'recommendationsAPI',
+    function( $scope, $http, $interval, albumsAPI, artistsAPI, collectedAPI, bouncebacksAPI, recommendationsAPI) {
       // $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
       $scope.currentUserID = Cookies.getJSON('current_user')._id;
       $scope.currentUserName = Cookies.getJSON('current_user').username;
@@ -150,6 +150,15 @@ angular
              console.log(response);
              $scope.recommendations.push(response.data);
              $scope.getRecommendationsByUser();
+            })
+          }
+          $scope.removeCollected = function(collected){
+            collectedAPI.remove(collected._id).then(function(response){
+              if(response.status == 203){
+                $scope.collecteds = $scope.collecteds.filter(function(f){
+                  return f._id != collected._id;
+                })
+              }
             })
           }
 
@@ -585,6 +594,9 @@ angular
         username: $scope.currentUserName, recommended_records: $scope.albumRecommendationArray } };
         $scope.saveRecommendations($scope.newRecommendations);
       }
+
+      $interval($scope.buildArtistRecommendations, 5000);
+      $interval($scope.getAllAlbums, 5000);
 
 
       // console.log($scope.collecteds);
