@@ -595,8 +595,9 @@ angular
         $scope.saveRecommendations($scope.newRecommendations);
       }
 
-      $interval($scope.buildArtistRecommendations, 5000);
-      $interval($scope.getAllAlbums, 5000);
+      // $interval($scope.buildArtistRecommendations, 5000);
+      // $interval($scope.getAllAlbums, 5000);
+      $interval($scope.callAPIs, 5000);
 
 
       // console.log($scope.collecteds);
