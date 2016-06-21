@@ -1,7 +1,7 @@
 angular
   .module('mainController', ['AlbumsAPI', 'ArtistsAPI', 'CollectedAPI', 'BouncebacksAPI', 'RecommendationsAPI'])
-  .controller('MainController', ['$scope', '$http', '$interval', 'albumsAPI', 'artistsAPI', 'collectedAPI', 'bouncebacksAPI', 'recommendationsAPI',
-    function( $scope, $http, $interval, albumsAPI, artistsAPI, collectedAPI, bouncebacksAPI, recommendationsAPI) {
+  .controller('MainController', ['$scope', '$http', '$timeout', '$interval', 'albumsAPI', 'artistsAPI', 'collectedAPI', 'bouncebacksAPI', 'recommendationsAPI',
+    function( $scope, $http, $timeout, $interval, albumsAPI, artistsAPI, collectedAPI, bouncebacksAPI, recommendationsAPI) {
       // $http.defaults.headers.post["Content-Type"] = "application/x-www-form-urlencoded";
       $scope.currentUserID = Cookies.getJSON('current_user')._id;
       $scope.currentUserName = Cookies.getJSON('current_user').username;
@@ -96,7 +96,6 @@ angular
           console.log($scope.recommends);
         })
       };
-
 
       $scope.getAllBouncebacks = function(){
         collectedAPI.getByUser($scope.currentUserID).then(function(response){
@@ -721,6 +720,12 @@ angular
         //console.log($scope.newArtist);
         //console.log($scope.newAlbum);
     }
+
+    $scope.postRecs = function(){
+      console.log('woo');
+      $scope.buildArtistRecommendations();
+      $timeout($scope.buildArtistRecommendations, 5000);
+    };
 
 
   }
